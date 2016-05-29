@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "hadoop01" do |hadoop01|
+    hadoop01.vm.box = "ubuntu/trusty32"
+    hadoop01.vm.hostname = "hadoop01"
+    hadoop01.vm.network :private_network, ip: "10.11.12.51"
+	hadoop01.vm.network "public_network"
+  end
+
+  config.vm.define "hadoop02" do |hadoop02|
+    hadoop02.vm.box = "ubuntu/trusty32"
+    hadoop02.vm.hostname = "hadoop02"
+    hadoop02.vm.network :private_network, ip: "10.11.12.52"
+	hadoop02.vm.network "public_network"
+  end
+end
