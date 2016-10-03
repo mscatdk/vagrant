@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.ssh.forward_x11 = true
+
+  config.vm.define "ubuntu" do |ubuntu|
+    ubuntu.vm.box = "box-cutter/ubuntu1404-desktop"
+    ubuntu.vm.hostname = "ubuntu"
+    ubuntu.vm.synced_folder "c:/Tools/vagrant/data", "/srv/data"
+    ubuntu.vm.network :private_network, ip: "10.11.12.3"
+    ubuntu.vm.network "public_network"
+    ubuntu.vm.network :forwarded_port, guest: 22, host: 2223, id: "ssh"
+
+    ubuntu.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.name = "ubuntu"
+        v.cpus = 1
+        v.gui = true
+    end
+
+  end
+
+end

@@ -5,17 +5,22 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "hadoop01" do |hadoop01|
-    hadoop01.vm.box = "ubuntu/trusty32"
-    hadoop01.vm.hostname = "hadoop01"
-    hadoop01.vm.network :private_network, ip: "10.11.12.51"
-	hadoop01.vm.network "public_network"
+  config.ssh.forward_x11 = true
+
+  config.vm.define "hadoop" do |hadoop|
+    hadoop.vm.box = "ubuntu/trusty32"
+    hadoop.vm.synced_folder "c:/Tools/vagrant/data", "/srv/data"
+    hadoop.vm.hostname = "hadoop"
+    hadoop.vm.network :private_network, ip: "10.11.12.6"
+    hadoop.vm.network "public_network"
+    hadoop.vm.network :forwarded_port, guest: 22, host: 2226, id: "ssh"
+
+    hadoop.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.name = "hadoop"
+        v.cpus = 2
+    end
+
   end
 
-  config.vm.define "hadoop02" do |hadoop02|
-    hadoop02.vm.box = "ubuntu/trusty32"
-    hadoop02.vm.hostname = "hadoop02"
-    hadoop02.vm.network :private_network, ip: "10.11.12.52"
-	hadoop02.vm.network "public_network"
-  end
 end
