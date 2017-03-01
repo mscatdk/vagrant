@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "kubeMaster" do |kubeMaster|
     kubeMaster.vm.box = "ubuntu/xenial32"
-    kubeMaster.vm.synced_folder "c:/Tools/vagrant/data", "/srv/data"
+    kubeMaster.vm.synced_folder "../synced_folder", "/srv/data"
     kubeMaster.vm.hostname = "kubeMaster"
     kubeMaster.vm.network :private_network, ip: "10.11.12.6"
     kubeMaster.vm.network "public_network"
