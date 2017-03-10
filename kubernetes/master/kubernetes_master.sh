@@ -14,21 +14,8 @@ sudo apt-get install -y docker.io
 
 sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 
-#Using flannel, as that is what is used for Raspberry Pi on HypriotOS
-sudo kubeadm init --pod-network-cidr 10.244.0.0/16 > /srv/data/init_master_log.out
+sudo kubeadm init --pod-network-cidr 10.244.0.0/16 --api-advertise-addresses=10.11.12.6 > /srv/data/init_master_log.out
 
-sudo tail -n1 /srv/data/init_master_log.out | sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' > /srv/data/init_node.sh
-
-#sudo cp /etc/kubernetes/kubelet.conf temp_kubelet.conf
-
-#sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_kubelet.conf > kubelet.conf
-
-#sudo cp kubelet.conf /etc/kubernetes
-
-#sudo cp /etc/kubernetes/admin.conf temp_admin.conf
-
-#sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_admin.conf > admin.conf
-
-#sudo cp admin.conf /etc/kubernetes
+sudo tail -n1 /srv/data/init_master_log.out > /srv/data/init_node.sh
 
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
