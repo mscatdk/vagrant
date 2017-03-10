@@ -8,13 +8,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_x11 = true
 
   config.vm.define "kubeMaster" do |kubeMaster|
-    kubeMaster.vm.box = "ubuntu/xenial32"
+    kubeMaster.vm.box = "ubuntu/xenial64"
     kubeMaster.vm.synced_folder "../synced_folder", "/srv/data"
     kubeMaster.vm.hostname = "kubeMaster"
     kubeMaster.vm.network :private_network, ip: "10.11.12.6"
     kubeMaster.vm.network "public_network"
     kubeMaster.vm.network :forwarded_port, guest: 22, host: 2226, id: "ssh"
 
+	config.vm.provision "shell", path: "kubernetes_master.sh"
+	
     kubeMaster.vm.provider "virtualbox" do |v|
         v.memory = 2048
         v.name = "kubeMaster"

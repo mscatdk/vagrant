@@ -8,12 +8,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_x11 = true
 
   config.vm.define "kubeNode01" do |kubeNode01|
-    kubeNode01.vm.box = "ubuntu/xenial32"
+    kubeNode01.vm.box = "ubuntu/xenial64"
     kubeNode01.vm.synced_folder "../synced_folder", "/srv/data"
     kubeNode01.vm.hostname = "kubeNode01"
     kubeNode01.vm.network :private_network, ip: "10.11.12.7"
     kubeNode01.vm.network "public_network"
     kubeNode01.vm.network :forwarded_port, guest: 22, host: 2227, id: "ssh"
+
+	config.vm.provision "shell", path: "kubernetes_node.sh"
 
     kubeNode01.vm.provider "virtualbox" do |v|
         v.memory = 2048
