@@ -19,16 +19,16 @@ sudo kubeadm init --pod-network-cidr 10.244.0.0/16 > /srv/data/init_master_log.o
 
 sudo tail -n1 /srv/data/init_master_log.out | sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' > /srv/data/init_node.sh
 
-sudo cp /etc/kubernetes/kubelet.conf temp_kubelet.conf
+#sudo cp /etc/kubernetes/kubelet.conf temp_kubelet.conf
 
-sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_kubelet.conf > kubelet.conf
+#sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_kubelet.conf > kubelet.conf
 
-sudo cp kubelet.conf /etc/kubernetes
+#sudo cp kubelet.conf /etc/kubernetes
 
-sudo cp /etc/kubernetes/admin.conf temp_admin.conf
+#sudo cp /etc/kubernetes/admin.conf temp_admin.conf
 
-sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_admin.conf > admin.conf
+#sudo sed -e 's/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/10.11.12.6/g' temp_admin.conf > admin.conf
 
-sudo cp admin.conf /etc/kubernetes
+#sudo cp admin.conf /etc/kubernetes
 
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
